@@ -57,29 +57,6 @@ indexes_u_19 <- which(first_data$X.RIC == 'SLB.N'); df_u_19 <- first_data[indexe
 indexes_u_20 <- which(first_data$X.RIC == 'VLO.N'); df_u_20 <- first_data[indexes_u_20,] 
 
 
-# Indexes of companies in healthcare sector and corresponding dataset
-
-indexes_m_1 <- which(first_data$X.RIC == 'AMZN.OQ'); df_m_1 <- first_data[indexes_m_1,] 
-indexes_m_2 <- which(first_data$X.RIC == 'APTV.N'); df_m_2 <- first_data[indexes_m_2,] 
-indexes_m_3 <- which(first_data$X.RIC == 'AZO.N'); df_m_3 <- first_data[indexes_m_3,] 
-indexes_m_4 <- which(first_data$X.RIC == 'HAS.OQ'); df_m_4 <- first_data[indexes_m_4,] 
-indexes_m_5 <- which(first_data$X.RIC == 'BBY.N'); df_m_5 <- first_data[indexes_m_5,] 
-indexes_m_6 <- which(first_data$X.RIC == 'BKNG.OQ'); df_m_6 <- first_data[indexes_m_6,] 
-indexes_m_7 <- which(first_data$X.RIC == 'BWA.N'); df_m_7 <- first_data[indexes_m_7,] 
-indexes_m_8 <- which(first_data$X.RIC == 'KMX.N'); df_m_8 <- first_data[indexes_m_8,] 
-indexes_m_9 <- which(first_data$X.RIC == 'CCL.N'); df_m_9 <- first_data[indexes_m_9,] 
-indexes_m_10 <- which(first_data$X.RIC == 'CMG.N'); df_m_10 <- first_data[indexes_m_10,] 
-indexes_m_11 <- which(first_data$X.RIC == 'DRI.N'); df_m_11 <- first_data[indexes_m_11,] 
-indexes_m_12 <- which(first_data$X.RIC == 'DPZ.N'); df_m_12 <- first_data[indexes_m_12,] 
-indexes_m_13 <- which(first_data$X.RIC == 'DHI.N'); df_m_13 <- first_data[indexes_m_13,] 
-indexes_m_14 <- which(first_data$X.RIC == 'EBAY.OQ'); df_m_14 <- first_data[indexes_m_14,] 
-indexes_m_15 <- which(first_data$X.RIC == 'ETSY.OQ'); df_m_15 <- first_data[indexes_m_15,] 
-indexes_m_16 <- which(first_data$X.RIC == 'EXPE.OQ'); df_m_16 <- first_data[indexes_m_16,] 
-indexes_m_17 <- which(first_data$X.RIC == 'F.N'); df_m_17 <- first_data[indexes_m_17,] 
-indexes_m_18 <- which(first_data$X.RIC == 'GRMN.OQ'); df_m_18 <- first_data[indexes_m_18,] 
-indexes_m_19 <- which(first_data$X.RIC == 'GM.N'); df_m_19 <- first_data[indexes_m_19,] 
-indexes_m_20 <- which(first_data$X.RIC == 'GPC.N'); df_m_20 <- first_data[indexes_m_20,] 
-
 # Creating the corresponding FTSdf_f_1
 
 fts_f_1 <- create_sp_fts(df_f_1); fts_f_1[is.na(fts_f_1)] <- 0
@@ -137,32 +114,6 @@ fts_u <- list(fts_u_1, fts_u_2, fts_u_3, fts_u_4, fts_u_5,
 
 
 fts_list <- c(fts_f, fts_u)
-
-fts_m_1 <- create_sp_fts(df_m_1); fts_m_1[is.na(fts_m_1)] <- 0
-fts_m_2 <- create_sp_fts(df_m_2); fts_m_2[is.na(fts_m_2)] <- 0
-fts_m_3 <- create_sp_fts(df_m_3); fts_m_3[is.na(fts_m_3)] <- 0
-fts_m_4 <- create_sp_fts(df_m_4); fts_m_4[is.na(fts_m_4)] <- 0
-fts_m_5 <- create_sp_fts(df_m_5); fts_m_5[is.na(fts_m_5)] <- 0
-fts_m_6 <- create_sp_fts(df_m_6); fts_m_6[is.na(fts_m_6)] <- 0
-fts_m_7 <- create_sp_fts(df_m_7); fts_m_7[is.na(fts_m_7)] <- 0
-fts_m_8 <- create_sp_fts(df_m_8); fts_m_8[is.na(fts_m_8)] <- 0
-fts_m_9 <- create_sp_fts(df_m_9); fts_m_9[is.na(fts_m_9)] <- 0
-fts_m_10 <- create_sp_fts(df_m_10); fts_m_10[is.na(fts_m_10)] <- 0
-fts_m_11 <- create_sp_fts(df_m_11); fts_m_11[is.na(fts_m_11)] <- 0
-fts_m_12 <- create_sp_fts(df_m_12); fts_m_12[is.na(fts_m_12)] <- 0
-fts_m_13 <- create_sp_fts(df_m_13); fts_m_13[is.na(fts_m_13)] <- 0
-fts_m_14 <- create_sp_fts(df_m_14); fts_m_14[is.na(fts_m_14)] <- 0
-fts_m_15 <- create_sp_fts(df_m_15); fts_m_15[is.na(fts_m_15)] <- 0
-fts_m_16 <- create_sp_fts(df_m_16); fts_m_16[is.na(fts_m_16)] <- 0
-fts_m_17 <- create_sp_fts(df_m_17); fts_m_17[is.na(fts_m_17)] <- 0
-fts_m_18 <- create_sp_fts(df_m_18); fts_m_18[is.na(fts_m_18)] <- 0
-fts_m_19 <- create_sp_fts(df_m_19); fts_m_19[is.na(fts_m_19)] <- 0
-fts_m_20 <- create_sp_fts(df_m_20); fts_m_20[is.na(fts_m_20)] <- 0
-
-fts_m <- list(fts_m_1, fts_m_2, fts_m_3, fts_m_4, fts_m_5,
-              fts_m_6, fts_m_7, fts_m_8, fts_m_9, fts_m_10,
-              fts_m_11, fts_m_12, fts_m_13, fts_m_14, fts_m_15,
-              fts_m_16, fts_m_17, fts_m_18, fts_m_19, fts_m_20)
 
 
 
