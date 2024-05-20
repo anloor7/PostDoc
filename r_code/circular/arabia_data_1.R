@@ -450,7 +450,7 @@ clustering_noncircular$U
 ARI.F(ground_truth, clustering_noncircular$U)
 JACCARD.F(ground_truth, clustering_noncircular$U)
 
-# Distance based on circular means
+# Distance based on circular quantiles
 
 
 # Selection of m
