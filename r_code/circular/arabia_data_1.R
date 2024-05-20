@@ -100,6 +100,7 @@ for (j in 1 : 64) {
 for (i in 1 : 64) {
   
   list_series[[i]][list_series[[i]] > 10] <- 0
+  list_series[[i]][list_series[[i]] == 0] <- median.circular(list_series[[i]]) + 2 * pi
   
 }
 
@@ -449,7 +450,59 @@ clustering_noncircular$U
 ARI.F(ground_truth, clustering_noncircular$U)
 JACCARD.F(ground_truth, clustering_noncircular$U)
 
+# Distance based on circular means
 
+
+# Selection of m
+
+features_mean <- list()
+set.seed(1234)
+vector_m <- seq(1.1, 2, 0.1)
+l_m <- length(vector_m)
+k <- 1
+xie_beni <- numeric()
+
+for (j1 in vector_m) {
+  
+  for (i in 1 : 64) {
+    
+    features_mean[[i]] <- as.numeric(quantile.circular(list_series[[i]], probs = c(0.1, 0.5, 0.9)))
+   
+    
+  }
+  
+  matrix_features_mean <- list_to_matrix(features_mean)
+
+  
+  clustering_mean <- FKM(cbind(matrix_features_mean, rep(0, 64)), k = 2, m = j1)
+  xie_beni[k] <- XB(cbind(matrix_features_mean, rep(0, 64)), 
+                    clustering_mean$U, clustering_mean$H, m = 2)
+  
+  k <- k + 1
+  print(j1)
+  
+}
+
+which.min(xie_beni)
+
+features_mean <- list()
+
+for (i in 1 : 64) {
+  
+  features_mean[[i]] <- as.numeric(quantile.circular(list_series[[i]], probs = c(0.1, 0.5, 0.9)))
+ 
+  
+}
+
+
+matrix_features_mean <- list_to_matrix(features_mean)
+
+
+set.seed(12345)
+clustering_mean <- fuzzy_c_medoids(cbind(matrix_features_mean, rep(0, 64)), C = 2, m = 1.9, dis = sed)
+clustering_mean$U
+ARI.F(ground_truth, clustering_mean$U)
+JACCARD.F(ground_truth, clustering_mean$U)
 
 # Plots of medoids for distance d_{CQA}
 
