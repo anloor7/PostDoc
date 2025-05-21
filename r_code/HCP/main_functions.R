@@ -1,7 +1,7 @@
 
 
 
-# Main function for HCP method with linear models (regression)
+# Main function for HCP method with linear models (regression). Naive implementation. 
 
 
 hclust_global <- function(df_list, n_out = 5, max_iter = 100) {
@@ -45,7 +45,7 @@ hclust_global <- function(df_list, n_out = 5, max_iter = 100) {
 
 
 
-# Main function for HCP method with knn models (regression)
+# Main function for HCP method with knn models (regression). Naive implementation.
 
 
 hclust_global_knn <- function(df_list, n_out = 5, max_iter = 100, k = 5) {
@@ -89,7 +89,7 @@ hclust_global_knn <- function(df_list, n_out = 5, max_iter = 100, k = 5) {
 
 
 
-# Main function for HCP method with SVR models (regression)
+# Main function for HCP method with SVR models (regression). Naive implementation.
 
 
 hclust_global_svm <- function(df_list, n_out = 5, max_iter = 100, k = 5) {
@@ -133,7 +133,7 @@ hclust_global_svm <- function(df_list, n_out = 5, max_iter = 100, k = 5) {
 
 
 
-# Main function for HCP method with LDA models (classification)
+# Main function for HCP method with LDA models (classification). Naive implementation.
 
 
 hclust_global_lda <- function(df_list, n_out = 5, max_iter = 100) {
