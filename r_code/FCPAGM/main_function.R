@@ -128,8 +128,8 @@ f_k_means_global_models_in_sample <- function(series, K, m = 2, max_lag = 1, nit
     error_list[[iter]] <- matrix_errors
     clustering_solution_list[[iter]] <- current_U
     centroids_list[[iter]] <- models
-    mae_iter[iter] <- sum(current_U*matrix_errors)
-    mae_vector_list[[iter]] <- sum(current_U*matrix_errors)
+    mae_iter[iter] <- sum(current_U^m*matrix_errors)
+    mae_vector_list[[iter]] <- sum(current_U^m*matrix_errors)
     
   }
   
@@ -176,8 +176,8 @@ f_k_means_global_models_in_sample <- function(series, K, m = 2, max_lag = 1, nit
       list_return <- list(clustering = current_U,
                           centroids = models,
                           niter = iter,
-                          mae =  sum(current_U*matrix_errors),
-                          mae_vector =  sum(current_U*matrix_errors),
+                          mae =  sum(current_U^m*matrix_errors),
+                          mae_vector =  sum(current_U^m*matrix_errors),
                           objective_function = objective_function,
                           error_list = error_list,
                           clustering_solution_list = clustering_solution_list,
@@ -190,8 +190,8 @@ f_k_means_global_models_in_sample <- function(series, K, m = 2, max_lag = 1, nit
     list_return <- list(clustering = current_U,
                         centroids = models,
                         niter = iter,
-                        mae = sum(current_U*matrix_errors),
-                        mae_vector = sum(current_U*matrix_errors),
+                        mae = sum(current_U^m*matrix_errors),
+                        mae_vector = sum(current_U^m*matrix_errors),
                         objective_function = objective_function,
                         error_list = error_list,
                         clustering_solution_list = clustering_solution_list,
