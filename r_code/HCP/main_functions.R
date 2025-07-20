@@ -18,21 +18,21 @@ hclust_global <- function(df_list, n_out = 5, max_iter = 100) {
   for (i in 1 : max_iter) {
     
     if (sum(diff(of_vector) < 0) == (length(of_vector) - 1)) {
+    
+    dis_matrix <- dis_matrix_global(partition, df_list, n_out = n_out)
+    number <- nrow(dis_matrix)^2 - nrow(dis_matrix) - (nrow(dis_matrix)^2 - nrow(dis_matrix)) * (1/2)
+    
+    of_vector[i + 2] <- of(partition, df_list, n_out = n_out)
+    
+    if (sum(dis_matrix < 0) != number) {
       
-      dis_matrix <- dis_matrix_global(partition, df_list, n_out = n_out)
-      number <- nrow(dis_matrix)^2 - nrow(dis_matrix) - (nrow(dis_matrix)^2 - nrow(dis_matrix)) * (1/2)
-      
-      of_vector[i + 2] <- of(partition, df_list, n_out = n_out)
-      
-      if (sum(dis_matrix < 0) != number) {
-        
-        dis_matrix[dis_matrix < 0] <- Inf
-        partition <- update_partition(partition, dis_matrix)
-        
-      }
-      
-      
+    dis_matrix[dis_matrix < 0] <- Inf
+    partition <- update_partition(partition, dis_matrix)
+    
     }
+    
+    
+  }
     
   }
   
