@@ -1,5 +1,5 @@
 
-#install.packages(c("mlmts", "wavethresh", "TSdist", "proxy", "Rfast", "ClusterR"))
+# install.packages(c("mlmts", "wavethresh", "TSdist", "proxy", "Rfast", "ClusterR"))
 library(mlmts)
 library(wavethresh)
 library(TSdist)
