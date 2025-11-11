@@ -1,4 +1,5 @@
 
+# Script for the simulations in Scenario 3 of the paper
 
 series_1 <- list() # Time series in the first cluster
 series_2 <- list() # Time series in the second cluster
