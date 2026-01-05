@@ -6,7 +6,7 @@
 # lag: lag l at which serial dependence is assessed
 
 # Output:
-# fqa: vector of FQA estimates (the omnibus statistic is computed as: series_length * sum(fqa^2)
+# fqa: vector of FQA estimates (the omnibus statistic is computed as: series_length * sum(fqa^2))
 # covariance: corresponding covariance matrix 
 
 
