@@ -161,7 +161,7 @@ estimate_fqa_vector_barlett_reduced <- function(X, probs, lag) {
 # Input parameters:
 # lambda: vector of (nonnegative) eigenvalues of the covariance matrix obtained as output of the previous function
 # prob: desired CDF level
-# B : number of Monte Carlo replications
+# B: number of Monte Carlo replications
 
 # Output:
 # Approximated critical value
