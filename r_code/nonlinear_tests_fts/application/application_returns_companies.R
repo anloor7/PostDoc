@@ -6,6 +6,7 @@ load('list_fts.RData')
 quantile_levels <- seq(0.05, 0.95, 0.05)
 alpha <- 0.05
 lags_test <- 1 : 10
+series_length <- 756 
 
 # Series 1 (GOOGL)
 
