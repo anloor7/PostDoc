@@ -1,5 +1,5 @@
 
-series_length   <- 200
+series_length   <- 100
 trials          <- 500
 quantile_levels <- seq(0.05, 0.95, 0.05)
 n_points        <- 500
