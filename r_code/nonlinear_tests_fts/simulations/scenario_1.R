@@ -36,10 +36,10 @@ for (i in 1 : trials) {
     
     alpha <- alphas[j]
     
-    # Proposed FQA test
+    # FQA
     
     crit_fqa <- simulate_q_linear_comb_chisq(lambda, prob = 1 - alpha)
-    rejections[i, j, "Proposed"] <- (whole_statistic > crit_fqa)
+    rejections[i, j, "FQA"] <- (whole_statistic > crit_fqa)
     
     # FPC
     
