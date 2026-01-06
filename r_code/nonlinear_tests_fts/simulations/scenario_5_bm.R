@@ -53,7 +53,7 @@ for (k in seq_along(c_values)) {
     facf_res <- fACF_test(f_data = f_data, H = lag_test, iid = TRUE, M = NULL, alpha = alpha)
     rejections[i, "FACF"] <- (facf_res$p_value < alpha)
 
-    # FACF
+    # SDO
     
     sdo_res <- spectral_test(f_data, kernel = 'Parzen', bandwidth = 'adaptive', alpha = alpha)
     rejections[i, "SDO"] <- (sdo_res$p_value < alpha) 
