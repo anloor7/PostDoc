@@ -68,13 +68,10 @@ for (k in seq_along(c_values)) {
     
   }
   
-  # Store empirical power for this c
   power_results[k, ] <- apply(rejections, 2, mean)
   cat("c =", c_val, "Power (α=0.05):", round(power_results[k, ], 3), "\n\n")
   
 }
-
-## Final results table
 
 print("Power results (T=200, α=0.05, varying c):")
 print(round(power_results, 3))
