@@ -206,7 +206,7 @@ simulate_linear_far1_bm <- function(series_length, n_points, phi_mat, burnin = 1
   for (t in 2:(series_length + burnin)) {
     
     # BROWNIAN MOTION NOISE (cumsum of IID increments)
-    bm_increments <- rnorm(n_points, 0, 1)
+    bm_increments <- rnorm(n_points, 0, sqrt(dt))
     bm_noise <- cumsum(bm_increments)
     
     X[t, ] <- as.vector(Phi_w %*% X[t - 1, ]) + bm_noise
@@ -402,7 +402,7 @@ simulate_threshold_far1_bm <- function(series_length, n_points,
   for (t in 2:(series_length + burnin)) {
     r_val <- r_fun(X[t - 1, ])
     
-    bm_increments <- rnorm(n_points, 0, 1)
+    bm_increments <- rnorm(n_points, 0, sqrt(dt))
     bm_noise <- cumsum(bm_increments)
     
     if (r_val <= s_thresh) {
