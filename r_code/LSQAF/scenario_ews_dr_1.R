@@ -1,5 +1,6 @@
 
 # Script for the simulations in Scenario 1 of the paper: original EWS method of Hargreaves et al. (2018), with dimensionality reduction
+# These results are not shown in the paper for brevity, but are available here
 
 series_1 <- list()
 series_2 <- list()
