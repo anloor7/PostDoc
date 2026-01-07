@@ -2,6 +2,7 @@
 # Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the null hypothesis of strong functional white noise
 # The generated functional time series are i.i.d. Gaussian functional white noise with a common quadratic mean function
 
+
 series_length   <- 100
 trials          <- 500
 quantile_levels <- seq(0.05, 0.95, 0.05)
