@@ -1,4 +1,6 @@
 
+# Script for the simulations in Scenario 3 of the paper: original EWS method of Hargreaves et al. (2018), with dimensionality reduction
+
 series_1 <- list()
 series_2 <- list()
 series_3 <- list()
@@ -8,7 +10,7 @@ K <- 3
 ground_truth <- rep(1 : K, each = n_series)
 ari <- numeric()
 trials <- 200
-ncomp <- 1
+ncomp <- 1 # Number of principal components
 
 
 for (j in 1 : trials) {
