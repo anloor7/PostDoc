@@ -1,4 +1,6 @@
 
+# Script for the simulations in Scenario 1 of the paper
+
 series_1 <- list()
 series_2 <- list()
 series_3 <- list()
