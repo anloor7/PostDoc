@@ -75,4 +75,4 @@ for (k in seq_along(c_values)) {
 }
 
 print("Power results (T=200, α=0.05, varying c):")
-print(round(power_results, 3))
+print(round(power_results, 4))
