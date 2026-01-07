@@ -1,6 +1,6 @@
-# Simulation experiments for Scenario 3 in the paper
+# Simulation experiments for Scenario 4 in the paper
 # Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the null hypothesis of strong functional white noise
-# The generated functional time series are i.i.d. Student-t functional white noise (with 3 degrees of freedom) with a common quadratic mean function
+# The generated functional time series are i.i.d. functional observations from a Fourier–Cauchy process
 
 
 series_length   <- 100
