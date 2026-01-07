@@ -1,11 +1,12 @@
 
-# install.packages(c("mlmts", "wavethresh", "TSdist", "proxy", "Rfast", "ClusterR"))
+# install.packages(c("mlmts", "wavethresh", "TSdist", "proxy", "Rfast", "ClusterR", "refund"))
 library(mlmts)
 library(wavethresh)
 library(TSdist)
 library(proxy)
 library(Rfast)
 library(ClusterR)
+library(refund)
 
 # Function to simulate the processes in Scenario 1
 
