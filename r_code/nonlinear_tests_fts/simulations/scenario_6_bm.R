@@ -1,3 +1,7 @@
+# Simulation experiments for Scenario 6 in the paper
+# Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the alternative hypothesis of serial dependence
+# The generated functional time series follow a threshold FAR(1) model with Brownian motion noise
+
 
 series_length   <- 200
 trials          <- 2000
