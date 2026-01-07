@@ -81,6 +81,6 @@ for (k in seq_along(sum_abs_values)) {
 }
 
 print("Power results (T=200, α=0.05, varying sum_abs_val):")
-print(round(power_results, 3))
+print(round(power_results, 4))
 
 
