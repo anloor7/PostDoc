@@ -82,4 +82,4 @@ for (i in 1:trials) {
   
 }
 
-apply(rejections, c(2, 3), mean)
+round(apply(rejections, c(2, 3), mean), 4)
