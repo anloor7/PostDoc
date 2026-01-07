@@ -1,3 +1,7 @@
+# Simulation experiments for Scenario 1 in the paper
+# Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the null hypothesis of strong functional white noise
+# The generated functional time series are i.i.d. Gaussian functional white noise
+
 
 series_length   <- 100
 trials          <- 500
@@ -82,4 +86,4 @@ for (i in 1 : trials) {
   
 }
 
-apply(rejections, c(2, 3), mean)
+round(apply(rejections, c(2, 3), mean), 4)
