@@ -1,3 +1,4 @@
+# Set a suitable working directory
 # Load the data
 load('list_fts.RData')
 
