@@ -1,3 +1,8 @@
+# Simulation experiments for Scenario 5 in the paper
+# Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the alternative hypothesis of serial dependence
+# The generated functional time series follow a linear FAR(1) model with Brownian motion noise
+# 10% of randomly selected curves are contaminated at 10% of randomly selected grid points by adding spikes of height 10
+
 
 series_length   <- 200
 trials          <- 2000
