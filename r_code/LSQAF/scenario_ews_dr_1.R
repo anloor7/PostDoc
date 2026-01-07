@@ -10,7 +10,8 @@ K <- 3
 ground_truth <- rep(1 : K, each = n_series)
 ari <- numeric()
 trials <- 200
-ncomp <- 1
+ncomp <- 1 # Number of principal components
+
 
 
 for (j in 1 : trials) {
