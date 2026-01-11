@@ -1,6 +1,6 @@
 # Simulation experiments for Scenario 1 in the paper
 # Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the null hypothesis of strong functional white noise
-# The generated functional time series are i.i.d. Brownian motions
+# The generated functional time series are i.i.d. Brownian motion
 
 
 series_length   <- 100
