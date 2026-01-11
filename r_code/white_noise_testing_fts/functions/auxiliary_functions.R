@@ -599,3 +599,28 @@ create_sp_fts <- function(df) {
   return(fts_idcr)
   
 }
+
+
+                    
+simulate_iid_fts_bm <- function(n_points, series_length) {
+  
+  u_grid <- seq(0, 1, length.out = n_points)
+  dt     <- u_grid[2] - u_grid[1]
+  
+  X <- matrix(0, nrow = series_length, ncol = n_points)
+  
+  for (i in 1 : series_length) {
+    
+    bm_increments <- rnorm(n_points, 0, sqrt(dt))
+    bm_noise <- cumsum(bm_increments)
+    
+    X[i, ] <- bm_noise
+    
+  }
+  
+  return(X)
+  
+}
+
+
+                    
