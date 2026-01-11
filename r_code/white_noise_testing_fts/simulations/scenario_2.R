@@ -1,6 +1,6 @@
 # Simulation experiments for Scenario 2 in the paper
 # Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the null hypothesis of strong functional white noise
-# The generated functional time series are i.i.d. Gaussian functional white noise with a common quadratic mean function
+# The generated functional time series are i.i.d. Gaussian functional white noise
 
 
 series_length   <- 100
@@ -19,9 +19,9 @@ rejections <- array(0L,
                                     methods))
 
 
-for (i in 1:trials) {
+for (i in 1 : trials) {
   
-  series <- simulate_quadratic_iid_fts(n_points = n_points,
+  series <- simulate_iid_fts(n_points = n_points,
                              series_length = series_length)
   grid <- attr(series, "grid")
   
@@ -32,8 +32,8 @@ for (i in 1:trials) {
   eig     <- eigen(cov_mat, symmetric = TRUE, only.values = TRUE)$values
   lambda  <- pmax(eig, 0)
   lambda  <- lambda[lambda > 0]
+
   
- 
   f_data <- t(series)
   
   for (j in seq_along(alphas)) {
@@ -51,7 +51,7 @@ for (i in 1:trials) {
                                  components = 3,
                                  lag = lag_test,
                                  alpha = alpha)
-    rejections[i, j, "FPC"] <- (ind_res$p_value < alpha)
+     rejections[i, j, "FPC"] <- (ind_res$p_value < alpha)
     
     # FACF
     
@@ -78,7 +78,7 @@ for (i in 1:trials) {
                             pplot   = FALSE,
                             suppress_raw_output   = FALSE,
                             suppress_print_output = FALSE)
-     rejections[i, j, "FSACF"] <- (fsacf_res$p_value < alpha)
+    rejections[i, j, "FSACF"] <- (fsacf_res$p_value < alpha)
     
   }
   
