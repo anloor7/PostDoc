@@ -1,6 +1,6 @@
 # Simulation experiments for Scenario 1 in the paper
 # Analysis of the rejection rates of the proposed omnibus test (FQA) and the alternative tests under the null hypothesis of strong functional white noise
-# The generated functional time series are i.i.d. Gaussian functional white noise
+# The generated functional time series are i.i.d. Brownian motions
 
 
 series_length   <- 100
@@ -21,7 +21,7 @@ rejections <- array(0L,
 
 for (i in 1 : trials) {
   
-  series <- simulate_iid_fts(n_points = n_points,
+  series <- simulate_iid_fts_bm(n_points = n_points,
                              series_length = series_length)
   grid <- attr(series, "grid")
   
