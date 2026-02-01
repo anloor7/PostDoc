@@ -9,6 +9,11 @@
 # fqa: vector of FQA estimates (the omnibus statistic is computed as: series_length * sum(fqa^2))
 # covariance: corresponding covariance matrix 
 
+# The covariance estimation uses the equivalent m-dependent process
+#   W_t = (Z_t, Z'_{t+lag}, Z_t Z'_{t+lag})
+# rather than (Z_t, Z'_t, Z_t Z'_{t+lag}) used in the proof.
+# Both constructions satisfy the same CLT and yield identical
+# asymptotic Gaussian limits for the CQA statistic
 
 estimate_fqa_vector_barlett_reduced <- function(X, probs, lag) {
   
