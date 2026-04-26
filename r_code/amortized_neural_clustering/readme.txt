@@ -1,6 +1,10 @@
 
-The folder called 'functions' contains the main functions to perform the proposed omnibus test, and some auxiliary functions and packages needed to run the code in this repository. Run the scripts in that folder first.
+- The folder “scenario_1” contains the Python scripts used for the analyses of Scenario 1 in the paper. It includes four files, each corresponding to a specific number of time series in the generated collections and a specific time-series length.
 
-The folder called 'simulations' contains the code related to the simulation study considered in the paper. Scenarios 1 to 4 refer to the null hypothesis, while Scenarios 5 and 6 refer to the alternative hypothesis. For each one of the Scenarios 5 and 6, there are 4 different scripts, each one referring to a different noise distribution: Gaussian (default), Student-t (t), Brownian motion (bm) and Brownian motion with outliers (contaminated).
+- The folder ''scenario_2'' contains the Python script used for the analyses of Scenario 1 in the paper.
 
-The folder called 'application' contains the data and the code related to the application considered in the paper.
+- The folder ''scenario_3'' contains the Python script used for the analyses of Scenario 2 in the paper.
+
+- The folder ''scenario_4'' contains the Python script used for the analyses of Scenario 3 in the paper.
+
+- The folder ''application'' contains the Python script used for the analyses of the application in the paper.
