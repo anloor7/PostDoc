@@ -130,6 +130,57 @@ estimate_cqa_structure <- function(X, probs, radii, lag = 1, lambda = 0) {
 # critical_value: approximated critical value
 
 
+cqa_critical <- function(Sigma_G,
+                         combs,
+                         alpha = 0.05,
+                         B = 10000) {
+  
+  D <- nrow(Sigma_G)
+  Sigma_G[!is.finite(Sigma_G)] <- 0
+  
+  pair_ids <- unique(combs[, c("i", "j")])
+  
+  idx_by_pair <- vector("list", length = nrow(pair_ids))
+  
+  for (m in seq_len(nrow(pair_ids))) {
+      
+    idx_by_pair[[m]] <- which(
+      combs$i == pair_ids$i[m] &
+        combs$j == pair_ids$j[m]
+    )
+  }
+  
+  Gmat <- mvtnorm::rmvnorm(n = B, mean = rep(0, D), sigma = Sigma_G)
+  
+  absGmat <- abs(Gmat)
+  
+  Q_sim <- numeric(B)
+  
+  for (m in seq_along(idx_by_pair)) {
+      
+    idx <- idx_by_pair[[m]]
+    Q_sim <- Q_sim + apply(absGmat[, idx, drop = FALSE], 1, max)
+      
+  }
+  
+  critical_value <- quantile(Q_sim, probs = 1 - alpha)
+  
+  return(critical_value)
+    
+}
+
+
+# This is a function to obtain the  p-value of the omnibus test
+# Input parameters:
+# Sigma_G: output covariance matrix of the above function
+# combs: output combs of the above function
+# alpha: significance level
+# B: number of Monte Carlo replications
+
+# Output:
+# critical_value: approximated critical value
+
+
 cqa_critical_new <- function(Sigma_G,
                          combs,
                          alpha = 0.05,
