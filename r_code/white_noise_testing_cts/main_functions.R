@@ -9,7 +9,7 @@
 
 # Output:
 # rho_hat: vector of CQA estimates
-# rho_array: corresponding covariance matrix 
+# rho_array: array of CQA estimates, with dimensions P (number of centers) x P (number of centers) x R (number of radii)
 # qstat: statistic Q_T(l)
 # Sigma_G: 
 # centers: circular quantiles corresponding to probs
