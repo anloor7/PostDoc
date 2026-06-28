@@ -121,8 +121,8 @@ estimate_cqa_structure <- function(X, probs, radii, lag = 1, lambda = 0) {
 
 # This is a function to obtain the critical value of the omnibus test
 # Input parameters:
-# Sigma_G: output covariance matrix of the above function
-# combs: output combs of the above function
+# Sigma_G: output covariance matrix of the function estimate_cqa_structure()
+# combs: output combs of the function estimate_cqa_structure()
 # alpha: significance level
 # B: number of Monte Carlo replications
 
@@ -170,20 +170,22 @@ cqa_critical <- function(Sigma_G,
 }
 
 
-# This is a function to obtain the  p-value of the omnibus test
+# This is a function to obtain the p-value of the omnibus test
 # Input parameters:
-# Sigma_G: output covariance matrix of the above function
-# combs: output combs of the above function
-# alpha: significance level
+# stat: output qstat of the function estimate_cqa_structure()
+# Sigma_G: output covariance matrix of the function estimate_cqa_structure()
+# series_length: length of the time series
+# combs: output combs of the function estimate_cqa_structure()
 # B: number of Monte Carlo replications
 
 # Output:
-# critical_value: approximated critical value
+# p_value: approximated p-value
 
 
-cqa_critical_new <- function(Sigma_G,
+cqa_pval <- function(stat,
+                         Sigma_G,
+                         series_length,
                          combs,
-                         alpha = 0.05,
                          B = 10000) {
   
   D <- nrow(Sigma_G)
@@ -214,8 +216,10 @@ cqa_critical_new <- function(Sigma_G,
       
   }
   
-  critical_value <- quantile(Q_sim, probs = 1 - alpha)
+  Q_T <- sqrt(series_length) * stat
   
-  return(critical_value)
-    
+  p_value <- (1 + sum(Q_sim >= Q_T))/(B + 1)
+  
+  return(p_value)
+  
 }
