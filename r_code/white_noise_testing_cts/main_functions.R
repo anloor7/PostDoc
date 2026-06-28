@@ -121,65 +121,50 @@ estimate_cqa_structure <- function(X, probs, radii, lag = 1, lambda = 0) {
 
 # This is a function to obtain the critical value of the omnibus test
 # Input parameters:
-# Sigma_cqa: output covariance of the above function
+# Sigma_G: output covariance matrix of the above function
 # combs: output combs of the above function
-# n_sim: number of Monte Carlo replications
 # alpha: significance level
+# B: number of Monte Carlo replications
 
 # Output:
-# crit: approximated critical value
+# critical_value: approximated critical value
 
 
-cqa_critical <- function(Sigma_cqa, combs, n_sim = 10000, alpha = 0.05) {
+cqa_critical_new <- function(Sigma_G,
+                         combs,
+                         alpha = 0.05,
+                         B = 10000) {
   
-  D <- nrow(Sigma_cqa)
-  P <- max(combs$i)
-  R <- max(combs$k)
+  D <- nrow(Sigma_G)
+  Sigma_G[!is.finite(Sigma_G)] <- 0
   
-  ## Index sets for each (i,j)
+  pair_ids <- unique(combs[, c("i", "j")])
   
-  idx_by_ij <- vector("list", length = P * P)
+  idx_by_pair <- vector("list", length = nrow(pair_ids))
   
-  for (i in 1:P) {
-    
-    for (j in 1:P) {
+  for (m in seq_len(nrow(pair_ids))) {
       
-      m <- (i - 1) * P + j
-      idx_by_ij[[m]] <- which(combs$i == i & combs$j == j)
-      
-    }
-    
+    idx_by_pair[[m]] <- which(
+      combs$i == pair_ids$i[m] &
+        combs$j == pair_ids$j[m]
+    )
   }
   
-  Gmat <- mvtnorm::rmvnorm(n_sim, mean = rep(0, D), sigma = Sigma_cqa)
-  absGmat <- abs(Gmat)   # same dimensions
+  Gmat <- mvtnorm::rmvnorm(n = B, mean = rep(0, D), sigma = Sigma_G)
   
-  # Compute Q_T for each simulation
+  absGmat <- abs(Gmat)
   
-  QT_sim <- numeric(n_sim)
+  Q_sim <- numeric(B)
   
-  for (b in 1:n_sim) {
-    
-    g_b <- absGmat[b, ]     
-    MT  <- matrix(0, nrow = P, ncol = P)
-    
-    for (i in 1:P) {
+  for (m in seq_along(idx_by_pair)) {
       
-      for (j in 1:P) {
-        
-        m <- (i - 1) * P + j
-        idx_ij <- idx_by_ij[[m]]
-        MT[i, j] <- max(g_b[idx_ij])
-        
-      }
+    idx <- idx_by_pair[[m]]
+    Q_sim <- Q_sim + apply(absGmat[, idx, drop = FALSE], 1, max)
       
-    }
-    
-    QT_sim[b] <- sum(MT)
   }
   
-  crit <- as.numeric(stats::quantile(QT_sim, probs = 1 - alpha))
+  critical_value <- quantile(Q_sim, probs = 1 - alpha)
   
-  return(crit)
-  
+  return(critical_value)
+    
 }
