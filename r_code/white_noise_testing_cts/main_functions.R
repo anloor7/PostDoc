@@ -11,7 +11,7 @@
 # rho_hat: vector of CQA estimates
 # rho_array: array of CQA estimates, with dimensions P (number of centers) x P (number of centers) x R (number of radii)
 # qstat: statistic Q_T(l)
-# Sigma_G: 
+# Sigma_G: covariance matrix Sigma_G (see Theorems 3 and 6 in the paper)
 # centers: circular quantiles corresponding to probs
 # combs: data frame with the considered combinations (i, j, k) for (\tau_i, \tau_j, r_k)
 # W: 
