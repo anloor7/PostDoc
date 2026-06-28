@@ -14,7 +14,7 @@
 # Sigma_G: covariance matrix Sigma_G (see Theorems 3 and 6 in the paper)
 # centers: circular quantiles corresponding to probs
 # combs: data frame with the considered combinations (i, j, k) for (\tau_i, \tau_j, r_k)
-# W: 
+# W: realization of the process W_t (see the proof of Theorem 3 in the paper)
 
 
 estimate_cqa_structure <- function(X, probs, radii, lag = 1, lambda = 0) {
