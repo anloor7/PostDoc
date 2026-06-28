@@ -8,15 +8,13 @@
 # lambda: shrinkage parameter for estimating the covariance matrix (according to the method of Schäfer and Strimmer)
 
 # Output:
-# cqa: vector of CQA estimates
-# covariance: corresponding covariance matrix 
-# SigmaW: covariance matrix of the process W_t
+# rho_hat: vector of CQA estimates
+# rho_array: corresponding covariance matrix 
 # qstat: statistic Q_T(l)
-# combs: data frame with the considered combinations (i, j, k) for (\tau_i, \tau_j, r_k)
+# Sigma_G: 
 # centers: circular quantiles corresponding to probs
-# p1: vector of probabilities p_{\tau_i, r_k}
-# p2: vector of probabilities p_{\tau_j, r_k}
-# p12: vector of probabilities p_{\tau_i, \tau_j, r_k}(l)
+# combs: data frame with the considered combinations (i, j, k) for (\tau_i, \tau_j, r_k)
+# W: 
 
 
 estimate_cqa_structure <- function(X, probs, radii, lag = 1, lambda = 0) {
