@@ -1,4 +1,5 @@
 
-# install.packages('circular', 'corpcor')
+# install.packages('circular', 'corpcor', 'mvtnorm')
 library(circular)
 library(corpcor)
+library(mvtnorm)
