@@ -5,6 +5,7 @@
 # probs: vector of quantile levels
 # radii: vector of radii
 # lag: lag l at which serial dependence is assessed
+# lambda: shrinkage parameter for estimating the covariance matrix (according to the method of Schäfer and Strimmer)
 
 # Output:
 # cqa: vector of CQA estimates
@@ -18,7 +19,7 @@
 # p12: vector of probabilities p_{\tau_i, \tau_j, r_k}(l)
 
 
-estimate_cqa_structure <- function(X, probs, radii, lag = 1) {
+estimate_cqa_structure <- function(X, probs, radii, lag = 1, lambda = 0) {
   
   series_length <- length(X)
   P <- length(probs) * 2
@@ -33,189 +34,88 @@ estimate_cqa_structure <- function(X, probs, radii, lag = 1) {
   combs <- expand.grid(i = 1:P, j = 1:P, k = 1:R)
   D     <- nrow(combs)     # D = P^2 * R
   
+  # Indicator array
   
-  # Storage
+  Z <- array(0, dim = c(series_length, P, R))
   
-  cqa_estimates <- numeric(D)
-  Zt_list       <- vector("list", D)
-  Ztl_list      <- vector("list", D)
-  Zprod_list    <- vector("list", D)
-  
-  p1_vec  <- numeric(D)
-  p2_vec  <- numeric(D)
-  p12_vec <- numeric(D)
-  
-  # 1) Build CQA components + W_t components (aligned length = T-lag)
-  
-  for (dd in 1:D) {
-    
-    i <- combs$i[dd]
-    j <- combs$j[dd]
-    k <- combs$k[dd]
-    
-    ci <- centers[i]
-    cj <- centers[j]
-    rk <- radii[k]
-    
-    # Aligned indicators for pairs (t, t+lag)
-    
-    A_i <- in_arc(X[1:(series_length - lag)], center = ci, radius = rk)
-    A_j <- in_arc(X[(1 + lag):series_length], center = cj, radius = rk)
-    
-    Zt         <- as.numeric(A_i)          # Length T-lag
-    Ztl_lagged <- as.numeric(A_j)          # Length T-lag
-    Zprod      <- Zt * Ztl_lagged          # Length T-lag
-    
-    # Empirical probabilities computed on the same aligned sample
-    
-    p1  <- mean(Zt)
-    p2  <- mean(Ztl_lagged)
-    p12 <- mean(Zprod)
-    
-    p1_vec[dd]  <- p1
-    p2_vec[dd]  <- p2
-    p12_vec[dd] <- p12
-    
-    denom <- sqrt(p1 * (1 - p1) * p2 * (1 - p2))
-    cqa_estimates[dd] <- if (denom > 0) (p12 - p1 * p2)/denom else 0
-    
-    Zt_list[[dd]]    <- Zt
-    Ztl_list[[dd]]   <- Ztl_lagged
-    Zprod_list[[dd]] <- Zprod
-    
-  }
-  
-  # 2) Stack W_t = (Zt, Ztl, Zt*Ztl) for all parameter combinations
-  
-  input_matrix <- do.call(
-    cbind,
-    mapply(function(Zt, Ztl, Zprod) cbind(Zt, Ztl, Zprod),
-           Zt_list, Ztl_list, Zprod_list, SIMPLIFY = FALSE)
-  )
-  
-  # 3) Center
-  
-  centered <- scale(input_matrix, center = TRUE, scale = FALSE)
-  
-  # The matrix centered has n = T-lag rows (W_t index runs over aligned pairs)
-  
-  n <- nrow(centered)
-  d <- ncol(centered)
-  
-  # 4) HAC estimate using 0 and ±lag (weight 1 at 0 and weight 0.5 at ±lag)
-  
-  covsum <- matrix(0, d, d)
-  
-  for (h in c(-lag, 0L, lag)) {
-    
-    if (h == 0) {
-      
-      w_h <- 1
-      
-    } else {
-      
-      w_h <- 0.50
-      
+  for (i in 1:P) {
+
+    for (k in 1:R) {
+
+      Z[, i, k] <- as.numeric(in_arc(X, centers[i], radii[k]))
+
     }
-    
-    # Valid indices
-    
-    if (h < 0) {
-      
-      i1 <- 1:(n + h)
-      i2 <- (1 - h):n
-      
-    } else if (h > 0) {
-      
-      i1 <- (1 + h):n
-      i2 <- 1:(n - h)
-      
-    } else {
-      
-      i1 <- 1:n
-      i2 <- 1:n
-      
-    }
-    
-    W1c <- centered[i1, , drop = FALSE]
-    W2c <- centered[i2, , drop = FALSE]
-    
-    cov_h <- t(W1c) %*% W2c/length(i1)
-    
-    covsum <- covsum + w_h * cov_h
-    
+
   }
   
-  SigmaW <- covsum
+  # Vector of CQA estimates
   
-  # 5) Jacobian of g for each CQA component
+  rho_hat <- numeric(D)
   
-  grad_g_list <- vector("list", D)
+  # Matrix of empirical W_t vectors
   
-  for (kk in 1:D) {
+  W <- matrix(0, nrow = series_length - lag, ncol = D)
+  
+  for (d in 1:D) {
     
-    p1  <- p1_vec[kk]
-    p2  <- p2_vec[kk]
-    p12 <- p12_vec[kk]
+    i <- combs$i[d]
+    j <- combs$j[d]
+    k <- combs$k[d]
     
-    gamma_hat <- p12 - p1 * p2
-    Dden <- sqrt(p1 * (1 - p1) * p2 * (1 - p2))
+    z_i <- Z[, i, k]
+    z_j <- Z[, j, k]
     
-    if (Dden > 0) {
-      
-      d1 <- (-p2 / Dden) - ((gamma_hat / (2 * Dden^3)) * (1 - 2 * p1) * p2 * (1 - p2))
-      d2 <- (-p1 / Dden) - ((gamma_hat / (2 * Dden^3)) * (1 - 2 * p2) * p1 * (1 - p1))
-      d3 <- 1 / Dden
-      grad_g_list[[kk]] <- c(d1, d2, d3)
-      
-    } else {
-      
-      grad_g_list[[kk]] <- c(0, 0, 0)
-      
-    }
+    p_i_hat <- mean(z_i)
+    p_j_hat <- mean(z_j)
+    
+    p_ij_hat <- mean(
+      z_i[1:(series_length - lag)] *
+        z_j[(lag + 1):series_length]
+    )
+    
+    sigma_hat <- sqrt(
+      p_i_hat * (1 - p_i_hat) *
+        p_j_hat * (1 - p_j_hat)
+    )
+    
+    rho_hat[d] <- (p_ij_hat - p_i_hat * p_j_hat)/sigma_hat
+    
+    W[, d] <-
+      ((z_i[1:(series_length - lag)] - p_i_hat) *
+         (z_j[(lag + 1):series_length] - p_j_hat))/sigma_hat
   }
   
-  grad_g_matrix <- matrix(0, nrow = D, ncol = 3 * D)
+  # Arrange rho_hat as a P x P x R array
   
-  for (kk in 1:D) {
-    
-    grad_g_matrix[kk, ((kk - 1) * 3 + 1):(kk * 3)] <- grad_g_list[[kk]]
-    
+  rho_array <- array(NA_real_, dim = c(P, P, R))
+  
+  for (d in 1:D) {
+
+    rho_array[combs$i[d], combs$j[d], combs$k[d]] <- rho_hat[d]
+
   }
   
-  # 6) Delta method covariance for the CQA vector
+  # Omnibus statistic Q_T
   
-  Sigma_cqa <- grad_g_matrix %*% SigmaW %*% t(grad_g_matrix)
+  Q_T <- sum(apply(abs(rho_array), c(1, 2), max))
   
-  # 7) Omnibus max-type statistic
+  # Covariance matrix Sigma_G
+  # Theorem 3: Sigma_G = Cov(W_0)
   
-  abs_vector <- abs(cqa_estimates)
-  MT_matrix <- matrix(0, nrow = P, ncol = P)
-  
-  for (ii in 1:P) {
-    
-    for (jj in 1:P) {
-      
-      idx_ij <- which(combs$i == ii & combs$j == jj)
-      MT_matrix[ii, jj] <- max(abs_vector[idx_ij])
-      
-    }
-    
-  }
-  
-  qstat <- sum(MT_matrix)
-  
+  W[!is.finite(W)] <- 0
+  Sigma_G_prev <- corpcor::cov.shrink(W, lambda = lambda, lambda.var = 0, verbose = F)
+  Sigma_G <- unclass(Sigma_G_prev)
+  Sigma_G <- as.matrix(Sigma_G)
+  diag(Sigma_G) <- 1
   
   return(list(
-    cqa       = cqa_estimates,
-    covariance = Sigma_cqa,
-    SigmaW    = SigmaW,
-    qstat     = qstat,
+    rho_hat   = rho_hat,
+    rho_array = rho_array,
+    qstat       = Q_T,
+    Sigma_G   = Sigma_G,
+    centers   = centers,
     combs     = combs,
-    centers = centers,
-    p1        = p1_vec,
-    p2        = p2_vec,
-    p12       = p12_vec
+    W         = W
   ))
   
 }
