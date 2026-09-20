@@ -20,7 +20,7 @@ p_values_fqa_1 <- numeric() # Vector of p-values for FQA
 
 for (i in 1 : 10) {
     
-    aux <- estimate_fqa_vector_barlett_reduced(fts_1, quantile_levels, lags_test[i])
+    aux <- estimate_fqa_vector_bartlett_reduced(fts_1, quantile_levels, lags_test[i])
     whole_statistic <- series_length * sum(aux$fqa^2)
     stats_fqa_1[i] <- whole_statistic
     cov_mat <- aux$covariance
