@@ -25,7 +25,7 @@ for (i in 1 : trials) {
                              series_length = series_length)
   grid <- attr(series, "grid")
   
-  aux <- estimate_fqa_vector_barlett_reduced(series, quantile_levels, lag_test)
+  aux <- estimate_fqa_vector_bartlett_reduced(series, quantile_levels, lag_test)
   whole_statistic <- series_length * sum(aux$fqa^2)
   
   cov_mat <- aux$covariance
