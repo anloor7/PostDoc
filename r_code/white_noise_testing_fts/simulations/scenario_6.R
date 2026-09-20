@@ -45,7 +45,7 @@ for (k in seq_along(sum_abs_values)) {
     
     # FQA
     
-    aux <- estimate_fqa_vector_barlett_reduced(series, quantile_levels, lag_test)
+    aux <- estimate_fqa_vector_bartlett_reduced(series, quantile_levels, lag_test)
     whole_statistic <- series_length * sum(aux$fqa^2)
     cov_mat <- aux$covariance
     eig <- eigen(cov_mat, symmetric = TRUE, only.values = TRUE)$values
