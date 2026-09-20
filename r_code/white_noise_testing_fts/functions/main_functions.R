@@ -9,7 +9,7 @@
 # fqa: vector of FQA estimates (the omnibus statistic is computed as: series_length * sum(fqa^2))
 # covariance: corresponding covariance matrix 
 
-estimate_fqa_vector_barlett_reduced <- function(X, probs, lag) {
+estimate_fqa_vector_bartlett_reduced <- function(X, probs, lag) {
   
   series_length <- nrow(X)
   n_points      <- ncol(X)
